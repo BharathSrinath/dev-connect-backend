@@ -16,7 +16,7 @@ connectDB()
   })
   .catch((error) => {
     console.error("Database connection failed:", error);
-    process.exit(1); // Exit the process if the DB connection fails
+    process.exit(1);
   });
 
 const app = express();
