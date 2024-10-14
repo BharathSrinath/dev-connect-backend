@@ -31,10 +31,10 @@ app.use("/", requestRouter);
 app.use("/", userRouter);
 
 // Deployment static files handling
-app.use(express.static(path.join(__dirname, "../../dev-connect-frontend/dist")));
+app.use(express.static(path.join(__dirname, "../dist")));
 
 app.get("*", (req, res) =>
-  res.sendFile(path.join(__dirname, "../../dev-connect-frontend", "dist", "index.html"))
+  res.sendFile(path.join(__dirname, "../", "dist", "index.html"))
 );
 
 const server = app.listen(3000, () => {
