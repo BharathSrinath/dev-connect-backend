@@ -33,7 +33,7 @@ authRouter.post("/signup", async (req, res) => {
       expires: new Date(Date.now() + 8 * 3600000),
     });
 
-    res.json({ message: "User Added successfully!", data: savedUser });
+    res.json({ message: "User Added successfully!", data: savedUser, token });
   } catch (err) {
     res.status(400).send(err.message + "ERROR : " + err.message);
   }
@@ -58,7 +58,7 @@ authRouter.post("/login", async (req, res) => {
         sameSite: "None",
         expires: new Date(Date.now() + 8 * 3600000),
       });
-      res.send(user);
+      res.send({ user, token });
     } else {
       throw new Error("Invalid credentials");
     }
