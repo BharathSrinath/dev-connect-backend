@@ -10,8 +10,12 @@ const userRouter = require("./routes/user");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 
-connectDB();
-
+connectDB()
+  .then(() => console.log("Database connection successful!")
+  .catch((error) => {
+    console.error("Database connection failed:", error);
+  }));
+  
 const app = express();
 
 app.use(express.json());
