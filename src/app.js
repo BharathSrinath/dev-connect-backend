@@ -11,11 +11,14 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 
 connectDB()
-  .then(() => console.log("Database connection successful!")
+  .then(() => {
+    console.log("Database connection successful!");
+  })
   .catch((error) => {
     console.error("Database connection failed:", error);
-  }));
-  
+    process.exit(1); // Exit the process if the DB connection fails
+  });
+
 const app = express();
 
 app.use(express.json());
@@ -68,17 +71,17 @@ io.on("connection", (socket) => {
 
   socket.on("new message", async (newMessageReceived) => {
     console.log("Received new message:", newMessageReceived);
-  
+
     const chatId = newMessageReceived.chatId;
-  
+
     try {
       const chat = await Chats.findById(chatId).populate("users");
-  
+
       if (!chat) {
         console.error("Chat not found");
         return;
       }
-  
+
       // Notify all users in the chat except the sender
       chat.users.forEach((user) => {
         if (user._id.toString() !== newMessageReceived.sender._id) {
@@ -90,7 +93,7 @@ io.on("connection", (socket) => {
       console.error("Error fetching chat or sending message:", error);
     }
   });
-  
+
 
   socket.off("setup", () => {
     console.log("USER DISCONNECTED");
