@@ -11,6 +11,7 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 
 connectDB();
+
 const app = express();
 
 app.use(express.json());
