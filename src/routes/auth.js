@@ -30,8 +30,6 @@ authRouter.post("/signup", async (req, res) => {
       httpOnly: false,
       secure: true,
       sameSite: "None",
-      domain: "dev-connect-a3f5b.web.app",
-      path: "/",
       expires: new Date(Date.now() + 8 * 3600000),
     });
 
@@ -58,8 +56,6 @@ authRouter.post("/login", async (req, res) => {
         httpOnly: false,
         secure: true,
         sameSite: "None",
-        domain: "dev-connect-a3f5b.web.app",
-        path: "/",
         expires: new Date(Date.now() + 8 * 3600000),
       });
       res.send(user);
@@ -76,8 +72,6 @@ authRouter.post("/logout", async (req, res) => {
     httpOnly: false,
     secure: true,
     sameSite: "None",
-    domain: "dev-connect-a3f5b.web.app",
-    path: "/",
     expires: new Date(Date.now()),
   });
   res.send("Logout Successful!!");
