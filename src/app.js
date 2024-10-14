@@ -46,7 +46,7 @@ app.get("*", (req, res) =>
 );
 
 const server = app.listen(3000, () => {
-  console.log("Server connected to port 3000!");
+  console.log("Server connected!");
 });
 
 const io = require("socket.io")(server, {
@@ -57,21 +57,16 @@ const io = require("socket.io")(server, {
 });
 
 io.on("connection", (socket) => {
-  console.log("Connected to socket.io");
-
   socket.on("setup", (userData) => {
     socket.join(userData._id); // Join the room with user ID
     socket.emit("connected");
   });
 
   socket.on("join chat", (room) => {
-    socket.join(room); // Join chat room based on chatId
-    console.log("User Joined Room: " + room);
+    socket.join(room);
   });
 
   socket.on("new message", async (newMessageReceived) => {
-    console.log("Received new message:", newMessageReceived);
-
     const chatId = newMessageReceived.chatId;
 
     try {
@@ -96,7 +91,6 @@ io.on("connection", (socket) => {
 
 
   socket.off("setup", () => {
-    console.log("USER DISCONNECTED");
     socket.leave(userData._id);
   });
 });
