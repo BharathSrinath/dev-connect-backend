@@ -38,7 +38,6 @@ app.use("/", profileRouter);
 app.use("/", requestRouter);
 app.use("/", userRouter);
 
-// Deployment static files handling
 app.use(express.static(path.join(__dirname, "dist")));
 
 app.get("*", (req, res) =>
@@ -58,7 +57,7 @@ const io = require("socket.io")(server, {
 
 io.on("connection", (socket) => {
   socket.on("setup", (userData) => {
-    socket.join(userData._id); // Join the room with user ID
+    socket.join(userData._id);
     socket.emit("connected");
   });
 
@@ -77,10 +76,8 @@ io.on("connection", (socket) => {
         return;
       }
 
-      // Notify all users in the chat except the sender
       chat.users.forEach((user) => {
         if (user._id.toString() !== newMessageReceived.sender._id) {
-          // Emit message to all users in this chat room except the sender
           socket.to(user._id).emit("message received", newMessageReceived);
         }
       });
